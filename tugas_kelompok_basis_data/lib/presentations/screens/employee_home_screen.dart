@@ -51,117 +51,136 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
         ),
       ),
       body: Center(
-        child: Form(
-          key: formKey,
-          child: Container(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            color: AppColor().snugCottage,
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  padding: const EdgeInsets.all(16),
-                  height: 160,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(18)),
-                    color: AppColor().infinity,
-                  ),
-                  child: Text(
-                    'Hello $userName!!!',
-                    style: TextStyle(
-                        fontSize: 46,
-                        fontWeight: FontWeight.w700,
-                        color: AppColor().snugCottage),
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: TextFormField(
-                    controller: idController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    decoration: InputDecoration(
-                      icon: const HeroIcon(HeroIcons.identification),
-                      hintText: 'Input your id',
-                      label: const Text('Id'),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16)),
+        child:
+            BlocBuilder<EmployeeBloc, EmployeeState>(builder: (context, state) {
+          return Form(
+            key: formKey,
+            child: Container(
+              height: double.maxFinite,
+              width: double.maxFinite,
+              color: AppColor().snugCottage,
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    padding: const EdgeInsets.all(16),
+                    height: 160,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(18)),
+                      color: AppColor().infinity,
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty == true) {
-                        return 'Id can\'t be empty';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: TextFormField(
-                    controller: pinController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      icon: const HeroIcon(HeroIcons.key),
-                      hintText: 'Input your pin',
-                      label: const Text('Private Pin'),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16)),
+                    child: Text(
+                      'Hello $userName!!!',
+                      style: TextStyle(
+                          fontSize: 46,
+                          fontWeight: FontWeight.w700,
+                          color: AppColor().snugCottage),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty == true) {
-                        return 'Pin can\'t be empty';
-                      } else {
-                        return null;
-                      }
-                    },
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      final idSalary = idController.text;
-                      final pinSalary = pinController.text;
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: TextFormField(
+                      controller: idController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: InputDecoration(
+                        icon: const HeroIcon(HeroIcons.identification),
+                        hintText: 'Input your id',
+                        label: const Text('Id'),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty == true) {
+                          return 'Id can\'t be empty';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: TextFormField(
+                      controller: pinController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        icon: const HeroIcon(HeroIcons.key),
+                        hintText: 'Input your pin',
+                        label: const Text('Private Pin'),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty == true) {
+                          return 'Pin can\'t be empty';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        final idSalary = idController.text;
+                        final pinSalary = pinController.text;
 
-                      context.read<EmployeeBloc>().add(GetSalary(
-                            id: int.parse(idSalary),
-                            pin: pinSalary,
-                          ));
-                      idController.clear();
-                      pinController.clear();
-                    }
-                  },
-                  height: 60,
-                  color: AppColor().evilLyn,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                        context.read<EmployeeBloc>().add(GetSalary(
+                              id: int.parse(idSalary),
+                              pin: pinSalary,
+                            ));
+
+                        if (state is SuccessGetState && state.result == true) {
+                          print(state.result);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sukses melakukan penggajian'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Gagal melakukan penggajian'),
+                            ),
+                          );
+                        }
+                        idController.clear();
+                        pinController.clear();
+                      }
+                    },
+                    height: 60,
+                    color: AppColor().evilLyn,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      'Get Salary !',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                    ),
                   ),
-                  child: const Text(
-                    'Get Salary !',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
-                  ),
-                ),
-                const Spacer(),
-              ],
+                  const Spacer(),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

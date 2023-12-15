@@ -5,7 +5,7 @@ class GetSalaryUsecase {
 
   GetSalaryUsecase(this.repository);
 
-  Future<void> getSalary({required int id, required String pin}) {
+  Future<bool> getSalary({required int id, required String pin}) {
     return repository.getSalary(id, pin);
   }
 }

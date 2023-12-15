@@ -4,7 +4,8 @@ import 'package:tugas_kelompok_basis_data/domains/repositories/employee_reposito
 class EmployeeRepositoryImpl implements EmployeeRepository {
   EmployeeApi api = EmployeeApi();
   @override
-  Future<void> getSalary(int id, String pin) async {
-    await api.getSalary(id, pin);
+  Future<bool> getSalary(int id, String pin) async {
+    final result = await api.getSalary(id, pin);
+    return result;
   }
 }

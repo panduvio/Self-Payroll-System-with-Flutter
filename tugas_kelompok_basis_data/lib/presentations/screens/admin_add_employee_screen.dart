@@ -224,7 +224,7 @@ class _AdminEmployeeAddScreenState extends State<AdminEmployeeAddScreen> {
                             hint: Text(
                               selectedPosition,
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),

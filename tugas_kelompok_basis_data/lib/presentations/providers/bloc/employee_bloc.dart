@@ -15,8 +15,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState>
   void _getSalary(GetSalary event, Emitter<EmployeeState> emit) async {
     emit(TryToGetState());
     try {
-      await sl<GetSalaryUsecase>().getSalary(id: event.id, pin: event.pin);
-      emit(SuccessGetState());
+      final result =
+          await sl<GetSalaryUsecase>().getSalary(id: event.id, pin: event.pin);
+      emit(SuccessGetState(result));
     } catch (e) {
       throw Exception('Failed to get Salary: $e');
     }

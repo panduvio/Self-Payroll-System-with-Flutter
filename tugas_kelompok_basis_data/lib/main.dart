@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tugas_kelompok_basis_data/dependency_injector.dart';
 import 'package:tugas_kelompok_basis_data/presentations/providers/bloc/admin_bloc.dart';
 import 'package:tugas_kelompok_basis_data/presentations/providers/bloc/employee_bloc.dart';
+import 'package:tugas_kelompok_basis_data/presentations/screens/employee_home_screen.dart';
 import 'package:tugas_kelompok_basis_data/presentations/screens/login_screen.dart';
 
 void main() {
@@ -37,7 +38,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: EmployeeHomeScreen(
+        userName: '',
+      ),
     );
   }
 }
